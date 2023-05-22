@@ -28,13 +28,13 @@ class GamesController < ApplicationController
       @score = results['length'] * results['length']
       session[:score] = @score if session[:score].nil?
       session[:score] += @score if session[:score] >= 0
-      @message = "Well done! You found : #{@guess} from #{@letters} - Your score is: #{@score}"
+      @message = "Well done! You found : #{@guess} from #{@letters} - Your score is: #{session[:score]}"
     elsif results['found'] == true
-      @message = "Sorry but #{@guess} can't be built out of #{@letters}"
-      @score = 0
+      session[:score] = 0 if session[:score].nil?
+      @message = "Sorry but #{@guess} can't be built out of #{@letters} - Your score is still : #{session[:score]}"
     else
-      @message = "Sorry but #{@guess} does not seem to be an english word..."
-      @score = 0
+      session[:score] = 0 if session[:score].nil?
+      @message = "Sorry but #{@guess} does not seem to be an english word... - Your score is still : #{session[:score]}"
     end
   end
 end
